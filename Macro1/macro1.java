@@ -4,7 +4,7 @@ import java.io.*;
 public class macro1{
     public static void main(String[] args) throws IOException, FileNotFoundException {
 // TODO Auto-generated method stub
-        BufferedReader br1=new BufferedReader(new FileReader("/home/gitanjali/java_programs/pattern/inputMacro1.txt"));
+        BufferedReader br1=new BufferedReader(new FileReader("/filepath/inputMacro1.txt"));
         String line;
         mdt[] MDT=new mdt[20];
         mnt[] MNT=new mnt[4];
@@ -71,7 +71,7 @@ public class macro1{
                 mdt_cnt++;
         }
         br1.close();
-        BufferedWriter bw1=new BufferedWriter(new FileWriter("/home/gitanjali/java_programs/pattern/mnt.java"));
+        BufferedWriter bw1=new BufferedWriter(new FileWriter("/filepath/mnt.java"));
         System.out.println("\n\t********MACRO NAME TABLE**********");
         System.out.println("\n\tINDEX\tNAME\tADDRESS");
         for(int i=0;i<mnt_cnt;i++)
@@ -80,7 +80,7 @@ public class macro1{
             bw1.write(MNT[i].name+"\t"+MNT[i].addr+"\n");
         }
         bw1.close();
-        bw1=new BufferedWriter(new FileWriter("/home/gitanjali/java_programs/pattern/arglist.java"));
+        bw1=new BufferedWriter(new FileWriter("/filepath/arglist.java"));
         System.out.println("\n\n\t********ARGUMENT LIST**********");
         System.out.println("\n\tINDEX\tNAME\tADDRESS");
         for(int i=0;i<arglist_cnt;i++)
@@ -90,7 +90,7 @@ public class macro1{
         }
         bw1.close();
         System.out.println("\n\t********MACRO DEFINITION TABLE**********");
-        System.out.println("\n\tINDEX\t\tSTATEMENT");bw1=new BufferedWriter(new FileWriter("/home/gitanjali/java_programs/pattern/mdt.java"));
+        System.out.println("\n\tINDEX\t\tSTATEMENT");bw1=new BufferedWriter(new FileWriter("/filepath/mdt.java"));
         for(int i=0;i<mdt_cnt;i++)
         {
             System.out.println("\t"+i+"\t"+MDT[i].stmnt);
