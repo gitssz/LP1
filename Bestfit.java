@@ -1,0 +1,57 @@
+package spos;
+
+public class Bestfit
+{
+	public static void main(String[] args)
+	{
+		int blockSize[] = {100, 500, 200, 300, 600};
+		int processSize[] = {212, 417, 112, 426};
+		int m = blockSize.length;
+		int n = processSize.length;
+		
+		bestFit(blockSize, m, processSize, n);
+	}
+	static void bestFit(int blockSize[], int m, int processSize[],
+													int n)
+	{
+		int allocation[] = new int[n];
+	
+		for (int i = 0; i < allocation.length; i++)
+			allocation[i] = -1;
+	
+		for (int i=0; i<n; i++)
+		{
+			int best = -1;
+			for (int j=0; j<m; j++)
+			{
+				if (blockSize[j] >= processSize[i])
+				{
+					if (best == -1)
+						best = j;
+					else if (blockSize[best] > blockSize[j])
+						best = j;
+				}
+			}
+	
+			if (best != -1)
+			{
+				allocation[i] = best;
+	
+				blockSize[best] -= processSize[i];
+			}
+		}
+	
+		System.out.println("\nProcess No.\tProcess Size\tBlock no.");
+		for (int i = 0; i < n; i++)
+		{
+			System.out.print(" " + (i+1) + "\t\t" + processSize[i] + "\t\t");
+			if (allocation[i] != -1)
+				System.out.print(allocation[i] + 1);
+			else
+				System.out.print("Not Allocated");
+			System.out.println();
+		}
+	}
+	
+	
+}
