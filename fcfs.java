@@ -1,6 +1,6 @@
 package pattern;
 
-public class fifo {
+public class fcfs {
     public static void main(String[] args){
 int[] process={1,2,3};
 int n =process.length;
