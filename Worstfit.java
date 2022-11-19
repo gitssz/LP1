@@ -1,55 +1,90 @@
 package spos;
-public class Worstfit{
-		
-	public static void main(String[] args)
+import java.util.Scanner;
+
+public class Worstfit
+{
+	public static void main(String args[])
 	{
-		int blockSize[] = {100, 500, 200, 300, 600};
-		int processSize[] = {212, 417, 112, 426};
-		int m = blockSize.length;
-		int n = processSize.length;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter no. of jobs: ");
+		int n=sc.nextInt();
+		int req[]=new int[n];
+		int job[]=new int[n];
+		System.out.println("Enter no. of blocks: ");
+		int m=sc.nextInt();
+		int b[]=new int[m];
+		int avl[]=new int[m];
+		int f[]=new int[m];
+		int temp;
 		
-		worstfit(blockSize, m, processSize, n);
-	}
-	static void worstfit(int blockSize[], int m, int processSize[],int n)
+		for(int i=0;i<n;i++)
 		{
-			int allocation[] = new int[n];
+			System.out.println("Enter memory requirement for job "+(i+1)+" : ");
+			req[i]=sc.nextInt();
+			job[i]=(i+1);
+		}
 		
-			for (int i = 0; i < allocation.length; i++)
-				allocation[i] = -1;
+		System.out.println();
+		for(int i=0;i<m;i++)
+		{
+			System.out.println("Enter memory available for block "+(i+1)+" : ");
+			avl[i]=sc.nextInt();
+			b[i]=(i+1);
+		}
 		
-			for (int i=0; i<n; i++)
+		System.out.println("------MEMORY REQUIREMENT------\n");
+		System.out.println("JOB\t M_REQUIREMENT");
+		for(int i=0;i<n;i++)
+		{
+			System.out.print(job[i]+"\t"+req[i]);
+			System.out.println();
+		}
+		
+		System.out.println();
+		System.out.println("-------MEMORY AVAILABLE:-------\n");
+		System.out.println("BLOCK\t M_AVAILABLE");
+		for(int i=0;i<m;i++)
+		{
+			System.out.print(b[i]+"\t"+avl[i]);
+			System.out.println();
+		}
+		
+		for (int i=0;i<n;i++)
+	    {
+	    	f[i]= 0;
+	    }
+		
+		
+		for(int i = 0 ; i <n; i++)
+		{
+			for(int  j=0;  j < n-(i+1) ; j++)
 			{
-				int worst = -1;
-				for (int j=0; j<m; j++)
+				if(avl[j] < avl[j+1])
 				{
-					if (blockSize[j] >= processSize[i])
-					{
-						if (worst == -1)
-							worst = j;
-						else if (blockSize[worst] < blockSize[j])
-							worst = j;
-					}
+					temp=avl[j];
+					avl[j]=avl[j+1];
+					avl[j+1]=temp;
+					temp=b[j];
+					b[j]=b[j+1];
+					b[j+1]=temp;
 				}
-		
-				if (worst != -1)
-				{
-					allocation[i] = worst;
-		
-					blockSize[worst] -= processSize[i];
-				}
-			}
-		
-			System.out.println("\nProcess No.\tProcess Size\tBlock no.");
-			for (int i = 0; i < n; i++)
-			{
-				System.out.print(" " + (i+1) + "\t\t" + processSize[i] + "\t\t");
-				if (allocation[i] != -1)
-					System.out.print(allocation[i] + 1);
-				else
-					System.out.print("Not Allocated");
-				System.out.println();
 			}
 		}
 		
+		System.out.println("JOB\t BLOCK");
+		for(int i=0;i<n;i++)
+		{
+			for(int j=0;j<m;j++)
+			{
+				if(req[i]<=avl[j] && f[j]==0) 
+				{
+					f[j]=1;
+					System.out.println(job[i]+"\t-->"+b[i]+"\n");
+					break;
+				}
+			}
+		}
+		sc.close();
+		
+	}
 }
-
