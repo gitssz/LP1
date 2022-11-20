@@ -1,4 +1,4 @@
-package spos;
+package ;
 import java.util.Scanner;
 
 public class BankerAlgo {
@@ -37,7 +37,12 @@ public class BankerAlgo {
 		for (int i = 0; i < no_of_process; i++)
 			for (int j = 0; j < no_of_resources; j++) 
 				need[i][j] = max[i][j] - allocate[i][j];
-		return need;
+		
+Allocated process : 0
+Allocated process : 1
+Allocated process : 2
+
+Allocated safelyreturn need;
 	}
 
 	private boolean check(int i) {
