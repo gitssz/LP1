@@ -1,28 +1,28 @@
 package spos;
 
 import java.io.*;
+import java.util.Scanner;
 
-class LRU {
+class Prac {
 	public static void main(String args[]) throws IOException {
-		BufferedReader obj = new BufferedReader(new InputStreamReader(System.in));
+		Scanner in = new Scanner(System.in);
 		int f, page = 0, ch, pgf = 0, n, chn = 0;
 		boolean flag;
 		int pages[];
 
-		System.out.println("1.LRU");
 		int pt = 0;
 		System.out.println("enter no. of frames: ");
-		f = Integer.parseInt(obj.readLine());
+		f = in.nextInt();
 		int frame[] = new int[f];
 		for (int i = 0; i < f; i++) {
 			frame[i] = -1;
 		}
 		System.out.println("enter the no of pages ");
-		n = Integer.parseInt(obj.readLine());
+		n = in.nextInt();
 		pages = new int[n];
 		System.out.println("enter the page no ");
 		for (int j = 0; j < n; j++)
-			pages[j] = Integer.parseInt(obj.readLine());
+			pages[j] = in.nextInt();
 
 		int pg = 0;
 		for (pg = 0; pg < n; pg++) {
@@ -62,11 +62,12 @@ class LRU {
 			} else {
 				System.out.print("frame :");
 				for (int j = 0; j < f; j++)
+
 					System.out.print(frame[j] + " ");
 				System.out.println();
 			}
 
-		} // for
+		}
 
 		System.out.println("Page fault:" + pgf);
 	}
