@@ -1,12 +1,12 @@
-package spos;
+package SPOS;
 import java.util.*;
- 
-public class Priority 
+
+public class priority 
 {
-        
-    public static void main(String args[])
-    {
-    	Scanner sc=new Scanner(System.in);
+       
+   public static void main(String args[])
+   {
+   		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter no of process : ");
 		int n= sc.nextInt();
 		int pid[] = new int[n];
@@ -37,16 +37,16 @@ public class Priority
 			{
 				if( at[j] >= at[j+1])
 				{
-					temp = at[j];	//at
+					temp = at[j];
 					at[j] = at[j+1];
 					at[j+1] = temp;
-					temp = bt[j];	//bt
+					temp = bt[j];
 					bt[j] = bt[j+1];
 					bt[j+1] = temp;
-					temp = pid[j];	//pid
+					temp = pid[j];
 					pid[j] = pid[j+1];
 					pid[j+1] = temp;
-					temp=prio[j];	//priority
+					temp=prio[j];
 				    prio[j]=prio[j+1];
 				    prio[j+1]=temp;
 				}
@@ -130,7 +130,7 @@ public class Priority
 			avg_wt += wt[i] ;
 			avg_tat += tat[i] ;
 		}
- 
+
 		System.out.println("Pid\tAT\tBT\tPRIO\tCT\tTAT\tWT\n");
 		for(i=0;i<n;i++)
 		{
@@ -138,7 +138,6 @@ public class Priority
 		}
 		System.out.print("\n Average Wait Time : "+avg_wt/n);
 		System.out.print("\n Average Turn Around Time : "+avg_tat/n);
-		
 		sc.close();
-    }
+   }
 }
