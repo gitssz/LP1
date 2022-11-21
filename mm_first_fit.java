@@ -1,8 +1,8 @@
 package SPOS;
 
-import java.util.*;
+import java.util.Scanner;
 
-public class mm_best_fit 
+public class mm_first_fit 
 {
 	public static void main(String args[])
 	{
@@ -16,7 +16,6 @@ public class mm_best_fit
 		int b[]=new int[m];
 		int avl[]=new int[m];
 		int f[]=new int[m];
-		int temp;
 		
 		for(int i=0;i<n;i++)
 		{
@@ -55,22 +54,7 @@ public class mm_best_fit
 	    	f[i]= 0;
 	    }
 		
-		for(int i = 0 ; i <n; i++)
-		{
-			for(int  j=0;  j < n-(i+1) ; j++)
-			{
-				if(avl[j] > avl[j+1])
-				{
-					temp=avl[j];
-					avl[j]=avl[j+1];
-					avl[j+1]=temp;
-					temp=b[j];
-					b[j]=b[j+1];
-					b[j+1]=temp;
-				}
-			}
-		}
-		
+		System.out.println();
 		System.out.println("JOB\t BLOCK");
 		for(int i=0;i<n;i++)
 		{
