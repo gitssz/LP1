@@ -1,79 +1,139 @@
 package ;
+
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
-
-public class BankerAlgo {
-
-	public static void main(String[] args) {
-		new BankerAlgo().isSafe();
-	}
-	
-	private int need[][], allocate[][], max[][], avail[][], no_of_process, no_of_resources;
-
-	private void input() {
-		Scanner input = new Scanner(System.in);
-		System.out.print("Enter no. of processes : ");
-		no_of_process = input.nextInt(); 
-		System.out.print("Enter no. of resources : ");
-		no_of_resources = input.nextInt(); 
-		need = new int[no_of_process][no_of_resources]; 
-		max = new int[no_of_process][no_of_resources];
-		allocate = new int[no_of_process][no_of_resources];
-		avail = new int[1][no_of_resources];
-		System.out.println("Enter allocation matrix: ");
-		for (int i = 0; i < no_of_process; i++)
-			for (int j = 0; j < no_of_resources; j++)
-				allocate[i][j] = input.nextInt(); 
-		System.out.println("Enter max matrix: ");
-		for (int i = 0; i < no_of_process; i++)
-			for (int j = 0; j < no_of_resources; j++)
-				max[i][j] = input.nextInt(); 
-		System.out.println("Enter available matrix: ");
-		for (int j = 0; j < no_of_resources; j++)
-			avail[0][j] = input.nextInt(); 
-		input.close();
-	}
-	
-	private int[][] calc_need() {
-		for (int i = 0; i < no_of_process; i++)
-			for (int j = 0; j < no_of_resources; j++) 
-				need[i][j] = max[i][j] - allocate[i][j];
+public class deadlock_avoidance
+{
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter no. of processes: ");
+		int m=sc.nextInt();
+		System.out.println("Enter no. of resources: ");
+		int n=sc.nextInt();
+		int [][]max=new int[m][n];
+		int [][]allocation=new int[m][n];
+		int [][]need=new int[m][n];
+		int [][]new_available=new int[1][n];
+		int f[]=new int[m];
+		Queue<String>  safe = new LinkedList<>();
 		
-Allocated process : 0
-Allocated process : 1
-Allocated process : 2
-
-Allocated safelyreturn need;
-	}
-
-	private boolean check(int i) {
-		for (int j = 0; j < no_of_resources; j++)
-			if (avail[0][j] < need[i][j])
-				return false;
-		return true;
-	}
-
-	public void isSafe() {
-		input();
-		calc_need();
-		boolean done[] = new boolean[no_of_process];
-		int j = 0;
-		while (j < no_of_process) { // until all process allocated
-			boolean allocated = false;
-			for (int i = 0; i < no_of_process; i++)
-				if (!done[i] && check(i)) { // trying to allocate
-					for (int k = 0; k < no_of_resources; k++)
-						avail[0][k] = avail[0][k] - need[i][k] + max[i][k];
-					System.out.println("Allocated process : " + i);
-					allocated = done[i] = true;
-					j++;
+		for(int i=0;i<m;i++)
+		{
+			f[i]=0;
+		}
+		for(int i=0;i<m;i++)
+		{
+			System.out.println("Enter no. of max resources required for process"+(i+1)+" : ");
+			for(int j=0;j<n;j++)
+			{
+				System.out.print("\t");
+				System.out.print(" R"+(j+1)+" : ");
+				max[i][j]=sc.nextInt();
+			}
+		}
+		
+		for(int i=0;i<m;i++)
+		{
+			System.out.println("Enter no. of resources allocated for process "+(i+1)+":");
+			for(int j=0;j<n;j++)
+			{
+				System.out.print("\t");
+				System.out.print(" R"+(j+1)+" : ");
+				allocation[i][j]=sc.nextInt();
+			}
+		}
+		
+		for(int i=0;i<1;i++)
+		{
+			System.out.println("Enter no. of resources available :");
+			for(int j=0;j<n;j++)
+			{
+				System.out.print("\t");
+				System.out.print(" R"+(j+1)+" : ");
+				new_available[i][j]=sc.nextInt();
+			}
+		}
+		
+		for(int i=0;i<m;i++)
+		{
+			for(int j=0;j<n;j++)
+			{
+				need[i][j]=max[i][j]-allocation[i][j];
+			}
+		}
+		
+		System.out.println("Need Matrix:");
+		for(int i=0;i<n;i++)
+		{
+			System.out.print("\tR"+(i+1));
+		}
+		System.out.println();
+		for(int i=0;i<m;i++)
+		{
+			System.out.print("P"+(i+1));
+			for(int j=0;j<n;j++)
+			{
+				System.out.print("\t"+need[i][j]);
+			}
+			System.out.println();
+		}
+		System.out.println();
+		
+		while(true)
+		{
+			for(int i=0;i<m;i++)
+			{
+				int flag=0;
+				for(int j=0;j<n;j++)
+				{
+					flag=0;
+					if(f[i]==0 && need[i][j]<=new_available[0][j])
+					{
+						flag=1;
+					}
+					else
+					{
+						flag=0;
+						break;
+					}
 				}
-			if (!allocated)
+					
+				if(flag==1)
+				{
+					safe.add("P"+(i+1));
+					System.out.println("P"+(i+1)+" is executed");
+					System.out.println("New available after execution of P"+(i+1)+" is:");
+					for(int j=0;j<n;j++)
+					{
+						{
+							new_available[0][j]=new_available[0][j]+allocation[i][j];
+							f[i]=1;
+							System.out.print("\t"+new_available[0][j]);
+						}
+					}
+					System.out.println();
+				}	
+			}
+			
+			int flag_f=0;
+			for(int k=0;k<m;k++) 
+			{
+				flag_f=0;
+				if(f[k]==1)
+				{
+					flag_f=1;
+				}
+				else
+					break;
+						
+			}
+			
+			if(flag_f==1)
 				break;
 		}
-		if (j == no_of_process) 
-			System.out.println("\nAllocated safely");
-		else
-			System.out.println("All proceess weren't allocated");
+		System.out.println("The safe sequence is : "+safe);
+		sc.close();	
 	}
-
 }
