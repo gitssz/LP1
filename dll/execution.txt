@@ -1,7 +1,7 @@
 javac B1.java
 javah -classpath . B1
 (or)
-javac -h B1.java
+javac -h . B1.java
 
         ls
         B1.c B1.c~ B1.class B1.h B1.java
